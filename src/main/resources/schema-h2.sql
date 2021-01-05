@@ -1,8 +1,8 @@
-drop table IF EXISTS acmeb_customer;
-drop table IF EXISTS acmeb_account;
-drop table IF EXISTS acmeb_user ;
-drop table IF EXISTS acmeb_transcation ;
-drop table IF EXISTS acmeb_fx_rate;
+--drop table IF EXISTS acmeb_customer;
+--drop table IF EXISTS acmeb_account;
+--drop table IF EXISTS acmeb_user ;
+--drop table IF EXISTS acmeb_transcation ;
+--drop table IF EXISTS acmeb_fx_rate;
 
 CREATE TABLE IF NOT EXISTS acmeb_user (
      user_id INT NOT NULL AUTO_INCREMENT NOT NULL PRIMARY KEY,
@@ -42,7 +42,7 @@ CREATE TABLE IF NOT EXISTS acmeb_transcation (
      status VARCHAR(20) NOT NULL
 );
 
-CREATE TABLE acmeb_fx_rate (
+CREATE TABLE IF NOT EXISTS acmeb_fx_rate (
   currency_code_from VARCHAR(10) NOT NULL,
   currency_code_to VARCHAR(10) NOT NULL,
   fx_rate DECIMAL(10, 5),

@@ -1,19 +1,18 @@
 package com.acmebank.accountmanager.mapper;
 
 import com.acmebank.accountmanager.domain.AcmebUser;
-import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import java.util.Date;
 
 @SpringBootTest
 @ActiveProfiles("test")
-@RunWith(SpringJUnit4ClassRunner.class)
 public class AcmebUserMapperTest {
 
     private static final Logger logger = LoggerFactory.getLogger(AcmebUserMapperTest.class);
@@ -24,7 +23,18 @@ public class AcmebUserMapperTest {
     @Test
     public void findById() {
         AcmebUser user = acmebUserMapper.findById(1);
-        Assert.assertNotNull("user should not be null", 1);
+        Assertions.assertTrue(user != null);
         logger.info("findByid ends");
+    }
+
+    @Test
+    public void insert() {
+        AcmebUser user = new AcmebUser();
+        user.setCreateDate(new Date());
+        user.setPasswordHash("DUMMY");
+        user.setUsername("dummy@dummy.com");
+        int count = acmebUserMapper.insert(user);
+        Assertions.assertTrue(count == 1);
+        logger.info("insert ends");
     }
 }

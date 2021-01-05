@@ -1,10 +1,7 @@
 package com.acmebank.accountmanager.mapper;
 
 import com.acmebank.accountmanager.domain.AcmebUser;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Result;
-import org.apache.ibatis.annotations.Results;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 
 public interface AcmebUserMapper {
 
@@ -16,4 +13,7 @@ public interface AcmebUserMapper {
             @Result(property = "createDate", column = "create_date")
     })
     AcmebUser findById(@Param("user_id") int userId);
+
+    @Insert("INSERT INTO acmeb_user(user_id, username, password_hash, create_date) VALUES (default, #{username}, #{passwordHash}, #{createDate})")
+    int insert(AcmebUser acmebUser);
 }
