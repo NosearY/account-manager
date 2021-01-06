@@ -14,6 +14,7 @@ import java.util.List;
 import javax.validation.Valid;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -34,13 +35,13 @@ public class AccountController {
     @Autowired
     private TransactionService transactionService;
 
-    @GetMapping("")
+    @GetMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "This method is used to get all accounts under the logged in user.")
     public ResponseEntity<List<AccountDto>> getUserAccount() throws AccountManagerAppException {
         return ResponseEntity.ok(userAccountService.getUserAccounts());
     }
 
-    @GetMapping("/{accountNo}")
+    @GetMapping(value = "/{accountNo}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "This method is used to get specific account by account no. under the logged in user.")
     public ResponseEntity<AccountDto> getUserAccountByNo(
         @PathVariable @Length(max = 8) String accountNo)
@@ -52,7 +53,7 @@ public class AccountController {
         return ResponseEntity.ok(dto);
     }
 
-    @GetMapping("/{accountNo}/balance")
+    @GetMapping(value = "/{accountNo}/balance", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "This method is used to get specific account balance by account no. under the logged in user.")
     public ResponseEntity<BigDecimal> getAccountBalance(
         @PathVariable @Length(max = 8) String accountNo)
@@ -64,7 +65,7 @@ public class AccountController {
         return ResponseEntity.ok(dto.getBalance());
     }
 
-    @PostMapping("/{accountNo}/transactions")
+    @PostMapping(value = "/{accountNo}/transactions", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "This method is used to transfer money to another account.")
     public ResponseEntity<TransactionDto> createTransferTransaction(
         @PathVariable @Length(max = 8) String accountNo,
@@ -90,8 +91,8 @@ public class AccountController {
         return ResponseEntity.created(uri).build();
     }
 
-    @GetMapping("/{accountNo}/transactions/{transactionId}")
-    @ApiOperation(value = "This method is get transaction by id.")
+    @GetMapping(value = "/{accountNo}/transactions/{transactionId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value = "This method is used get transaction by id.")
     public ResponseEntity<TransactionDto> getTransactionByd(@PathVariable String accountNo,
         @PathVariable Integer transactionId)
         throws AccountManagerAppException {
