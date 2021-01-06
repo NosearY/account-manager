@@ -13,6 +13,8 @@ import com.acmebank.accountmanager.service.TransactionService;
 import java.math.BigDecimal;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -21,6 +23,8 @@ import org.springframework.test.context.ActiveProfiles;
 @SpringBootTest
 @ActiveProfiles("test")
 public class TransactionServiceImplTest {
+
+    private static final Logger logger = LoggerFactory.getLogger(TransactionServiceImplTest.class);
 
     @Autowired
     private TransactionService transactionService;
@@ -62,18 +66,15 @@ public class TransactionServiceImplTest {
 
         // EXCEPTIONAL CASE: LARGE AMT
         BigDecimal largeAmt = new BigDecimal("100000000000");
-        TransactionDto transactionDto2 = transactionService
-            .transferMoney(fromAccount.getAccountNo(), toAccount.getAccountNo(), "HKD", largeAmt);
+        try {
+            TransactionDto transactionDto2 = transactionService
+                .transferMoney(fromAccount.getAccountNo(), toAccount.getAccountNo(), "HKD",
+                    largeAmt);
+            Assertions.fail("Should throw exception");
+        } catch (AccountManagerAppException e) {
+            logger.info("expected");
+        }
 
-        Assertions
-            .assertTrue(transactionDto2 != null && "FAILED".equals(transactionDto2.getStatus()));
 
-        AcmebAccount fromAccountAfter2 = acmebAccountMapper.findByIdAndAccountNo(1, "12345678");
-        AcmebAccount toAccountAfter2 = acmebAccountMapper.findByIdAndAccountNo(2, "88888888");
-
-        Assertions.assertTrue(
-            fromAccountAfter.getBalance().equals(fromAccountAfter2.getBalance()));
-        Assertions.assertTrue(
-            toAccountAfter.getBalance().equals(toAccountAfter2.getBalance()));
     }
 }

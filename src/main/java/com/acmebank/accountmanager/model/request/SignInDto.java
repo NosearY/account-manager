@@ -1,7 +1,7 @@
 package com.acmebank.accountmanager.model.request;
 
-import com.sun.istack.internal.NotNull;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.Length;
 
 public class SignInDto {
