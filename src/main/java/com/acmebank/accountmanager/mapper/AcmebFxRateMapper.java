@@ -1,6 +1,6 @@
 package com.acmebank.accountmanager.mapper;
 
-import com.acmebank.accountmanager.domain.AcmebUser;
+import com.acmebank.accountmanager.model.domain.AcmebUser;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Result;
 import org.apache.ibatis.annotations.Results;

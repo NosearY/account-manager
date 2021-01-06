@@ -1,12 +1,12 @@
-package com.acmebank.accountmanager.domain;
+package com.acmebank.accountmanager.model.domain;
 
 import java.util.Date;
 import java.util.Objects;
 
 public class AcmebTransaction {
     private int transactionId;
-    private String accountNo;
     private int fromAccountId;
+    private int toAccountId;
     private int amount;
     private int currencyCode;
     private Date createTs;
@@ -19,14 +19,6 @@ public class AcmebTransaction {
 
     public void setTransactionId(int transactionId) {
         this.transactionId = transactionId;
-    }
-
-    public String getAccountNo() {
-        return accountNo;
-    }
-
-    public void setAccountNo(String accountNo) {
-        this.accountNo = accountNo;
     }
 
     public int getFromAccountId() {
@@ -77,23 +69,38 @@ public class AcmebTransaction {
         this.status = status;
     }
 
+    public int getToAccountId() {
+        return toAccountId;
+    }
+
+    public void setToAccountId(int toAccountId) {
+        this.toAccountId = toAccountId;
+    }
+
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         AcmebTransaction that = (AcmebTransaction) o;
         return transactionId == that.transactionId &&
-                fromAccountId == that.fromAccountId &&
-                amount == that.amount &&
-                currencyCode == that.currencyCode &&
-                accountNo.equals(that.accountNo) &&
-                createTs.equals(that.createTs) &&
-                Objects.equals(updateTs, that.updateTs) &&
-                status.equals(that.status);
+            fromAccountId == that.fromAccountId &&
+            toAccountId == that.toAccountId &&
+            amount == that.amount &&
+            currencyCode == that.currencyCode &&
+            Objects.equals(createTs, that.createTs) &&
+            Objects.equals(updateTs, that.updateTs) &&
+            Objects.equals(status, that.status);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(transactionId, accountNo, fromAccountId, amount, currencyCode, createTs, updateTs, status);
+        return Objects
+            .hash(transactionId, fromAccountId, toAccountId, amount, currencyCode,
+                createTs,
+                updateTs, status);
     }
 }

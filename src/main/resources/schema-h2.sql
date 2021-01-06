@@ -7,7 +7,7 @@
 CREATE TABLE IF NOT EXISTS acmeb_user (
      user_id INT NOT NULL AUTO_INCREMENT NOT NULL PRIMARY KEY,
      username VARCHAR(200) NOT NULL,
-     password_hash VARCHAR(20) NOT NULL,
+     password_hash VARCHAR(72) NOT NULL,
      create_date DATE,
      CONSTRAINT acmeb_user_con1 UNIQUE (username)
 );
@@ -32,7 +32,6 @@ CREATE TABLE IF NOT EXISTS acmeb_account (
 
 CREATE TABLE IF NOT EXISTS acmeb_transcation (
      transaction_id INT NOT NULL AUTO_INCREMENT NOT NULL PRIMARY KEY,
-     account_no VARCHAR(200) NOT NULL,
      from_account_id INT NOT NULL,
      to_account_id INT NOT NULL,
      amount DECIMAL(20, 2) NOT NULL,

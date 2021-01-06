@@ -1,4 +1,4 @@
-package com.acmebank.accountmanager.domain;
+package com.acmebank.accountmanager.model.domain;
 
 import java.util.Date;
 import java.util.Objects;
