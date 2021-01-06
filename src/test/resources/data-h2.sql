@@ -9,3 +9,5 @@ INSERT INTO acmeb_customer(customer_id, customer_name, create_date, user_id) VAL
 INSERT INTO acmeb_account(account_id, account_no, currency_code, balance, create_date, user_id) VALUES (1, '12345678', 'HKD', 1000000, CURRENT_TIMESTAMP(), 1);
 
 INSERT INTO acmeb_account(account_id, account_no, currency_code, balance, create_date, user_id) VALUES (2, '88888888', 'HKD', 1000000, CURRENT_TIMESTAMP(), 2);
+
+INSERT INTO acmeb_transaction(transaction_id, from_account_id, to_account_id, amount, currency_code, create_ts, update_ts, status) VALUES (1, 1, 2, 1000, 'HKD', CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP(), 'OK');

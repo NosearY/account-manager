@@ -30,7 +30,7 @@ CREATE TABLE IF NOT EXISTS acmeb_account (
      foreign key (user_id) references acmeb_user(user_id)
 );
 
-CREATE TABLE IF NOT EXISTS acmeb_transcation (
+CREATE TABLE IF NOT EXISTS acmeb_transaction (
      transaction_id INT NOT NULL AUTO_INCREMENT NOT NULL PRIMARY KEY,
      from_account_id INT NOT NULL,
      to_account_id INT NOT NULL,

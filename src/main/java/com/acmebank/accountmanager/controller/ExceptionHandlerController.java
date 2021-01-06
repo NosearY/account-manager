@@ -22,7 +22,7 @@ public class ExceptionHandlerController extends ResponseEntityExceptionHandler {
     protected ResponseEntity<GenericErrorResponse> handleAppException(
         AccountManagerAppException ex, WebRequest request) {
         logger.error("Application level exception ", ex);
-        return new ResponseEntity(new GenericErrorResponse(ex.getHttpStatus().getReasonPhrase()),
+        return new ResponseEntity(new GenericErrorResponse(ex.getMessage()),
             ex.getHttpStatus());
     }
 

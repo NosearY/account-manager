@@ -1,14 +1,16 @@
 package com.acmebank.accountmanager.model.domain;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.Objects;
+
 
 public class AcmebTransaction {
     private int transactionId;
     private int fromAccountId;
     private int toAccountId;
-    private int amount;
-    private int currencyCode;
+    private BigDecimal amount;
+    private String currencyCode;
     private Date createTs;
     private Date updateTs;
     private String status;
@@ -29,19 +31,19 @@ public class AcmebTransaction {
         this.fromAccountId = fromAccountId;
     }
 
-    public int getAmount() {
+    public BigDecimal getAmount() {
         return amount;
     }
 
-    public void setAmount(int amount) {
+    public void setAmount(BigDecimal amount) {
         this.amount = amount;
     }
 
-    public int getCurrencyCode() {
+    public String getCurrencyCode() {
         return currencyCode;
     }
 
-    public void setCurrencyCode(int currencyCode) {
+    public void setCurrencyCode(String currencyCode) {
         this.currencyCode = currencyCode;
     }
 
@@ -76,6 +78,7 @@ public class AcmebTransaction {
     public void setToAccountId(int toAccountId) {
         this.toAccountId = toAccountId;
     }
+
 
     @Override
     public boolean equals(Object o) {

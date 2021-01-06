@@ -1,21 +1,17 @@
 package com.acmebank.accountmanager.model.request;
 
 import java.math.BigDecimal;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import org.hibernate.validator.constraints.Length;
 
 public class TransferMoneyDto {
 
-    private String fromAccount;
+    @NotNull
+    @Length(max = 8)
     private String toAccount;
-    private String currencyCode;
+    @Min(1)
     private BigDecimal amount;
-
-    public String getFromAccount() {
-        return fromAccount;
-    }
-
-    public void setFromAccount(String fromAccount) {
-        this.fromAccount = fromAccount;
-    }
 
     public String getToAccount() {
         return toAccount;
@@ -23,14 +19,6 @@ public class TransferMoneyDto {
 
     public void setToAccount(String toAccount) {
         this.toAccount = toAccount;
-    }
-
-    public String getCurrencyCode() {
-        return currencyCode;
-    }
-
-    public void setCurrencyCode(String currencyCode) {
-        this.currencyCode = currencyCode;
     }
 
     public BigDecimal getAmount() {

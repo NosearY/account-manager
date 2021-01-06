@@ -1,6 +1,7 @@
 package com.acmebank.accountmanager.mapper;
 
 import com.acmebank.accountmanager.model.domain.AcmebAccount;
+import java.math.BigDecimal;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -25,8 +26,33 @@ public class AcmebAccountMapperTest {
 
     @Test
     public void findById() {
-        AcmebAccount user = acmebAccountMapper.findById(1);
-        Assertions.assertTrue(user != null);
+        AcmebAccount account = acmebAccountMapper.findById(1);
+        Assertions.assertTrue(account != null);
         logger.info("findByid ends");
+    }
+
+    @Test
+    public void findByIdAndAccountNo() {
+        AcmebAccount account = acmebAccountMapper.findByIdAndAccountNo(1, "12345678");
+        Assertions.assertTrue(account != null);
+        logger.info("findByid ends");
+    }
+
+    @Test
+    public void findByAccountNo() {
+        AcmebAccount account = acmebAccountMapper.findByAccountNo("12345678");
+        Assertions.assertTrue(account != null);
+        logger.info("findByid ends");
+    }
+
+    @Test
+    public void updateBalanceById() {
+        AcmebAccount account = acmebAccountMapper.findById(1);
+        BigDecimal originalBalance = account.getBalance();
+        BigDecimal amt = new BigDecimal("-1000");
+        int count = acmebAccountMapper.addBalanceById(amt, 1);
+        Assertions.assertTrue(count == 1);
+        AcmebAccount accountAfter = acmebAccountMapper.findById(1);
+        Assertions.assertTrue(originalBalance.add(amt).equals(accountAfter.getBalance()));
     }
 }

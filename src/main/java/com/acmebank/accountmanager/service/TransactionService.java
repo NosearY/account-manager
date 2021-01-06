@@ -1,11 +1,16 @@
 package com.acmebank.accountmanager.service;
 
+import com.acmebank.accountmanager.exception.AccountManagerAppException;
 import com.acmebank.accountmanager.model.dto.TransactionDto;
-import com.acmebank.accountmanager.model.request.TransferMoneyDto;
+import java.math.BigDecimal;
 
 public interface TransactionService {
 
-    public TransactionDto transferMoneyRequestDto(TransferMoneyDto request);
+    public TransactionDto transferMoney(String fromAccountNo, String toAccountNo,
+        String currencyCode,
+        BigDecimal amount) throws AccountManagerAppException;
 
-    public TransactionDto getTransactionsByAccountId(int accountId);
+    public TransactionDto getTransactionByIdAndAccountNo(int transactionId, String accountNo)
+        throws AccountManagerAppException;
+
 }

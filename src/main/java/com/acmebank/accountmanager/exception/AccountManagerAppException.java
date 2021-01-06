@@ -41,12 +41,33 @@ public class AccountManagerAppException extends Exception {
             "customer not found for user " + userId);
     }
 
-    public static AccountManagerAppException accountNumerNotfound(String accountNo,
-        int userId) {
+    public static AccountManagerAppException userAccountNotfound(String accountNo) {
         return new AccountManagerAppException(
-            HttpStatus.NOT_FOUND, "account " + accountNo + " not found for user " + userId);
+            HttpStatus.NOT_FOUND, "account " + accountNo + " not found for current user");
     }
 
+    public static AccountManagerAppException targetAccountNotfound(String accountNo) {
+        return new AccountManagerAppException(
+            HttpStatus.NOT_FOUND, "target account " + accountNo + " not found");
+    }
+
+    public static AccountManagerAppException transactionNotfound(int transactionId) {
+        return new AccountManagerAppException(
+            HttpStatus.NOT_FOUND, "transaction " + transactionId + " not found");
+    }
+
+    public static AccountManagerAppException insufficientBalance(String accountNo) {
+        return new AccountManagerAppException(
+            HttpStatus.OK,
+            "account " + accountNo + " has no sufficient balance to transfer money");
+    }
+
+    public static AccountManagerAppException sameAccountForbidden(String accountNo) {
+        return new AccountManagerAppException(
+            HttpStatus.OK,
+            "operation forbidden as target account " + accountNo
+                + " is the same as source account");
+    }
 
     public static AccountManagerAppException forbidden() {
         return new AccountManagerAppException(

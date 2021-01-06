@@ -7,9 +7,13 @@ import com.acmebank.accountmanager.mapper.AcmebUserMapper;
 import com.acmebank.accountmanager.model.domain.AcmebAccount;
 import com.acmebank.accountmanager.model.domain.AcmebUser;
 import com.acmebank.accountmanager.model.dto.AccountDto;
+import com.acmebank.accountmanager.model.dto.TransactionDto;
 import com.acmebank.accountmanager.model.dto.UserDetailsImpl;
-import com.acmebank.accountmanager.service.AccountService;
+import com.acmebank.accountmanager.model.request.TransferMoneyDto;
+import com.acmebank.accountmanager.service.AdminAccountService;
 import com.acmebank.accountmanager.service.SecurityContextService;
+import com.acmebank.accountmanager.service.TransactionService;
+import com.acmebank.accountmanager.service.UserAccountService;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.slf4j.Logger;
@@ -20,9 +24,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Transactional
-public class AccountServiceImpl implements AccountService {
+public class UserAccountServiceImpl implements UserAccountService {
 
-    private static final Logger logger = LoggerFactory.getLogger(AccountServiceImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(UserAccountServiceImpl.class);
 
     @Autowired
     private SecurityContextService securityContextService;
@@ -35,6 +39,12 @@ public class AccountServiceImpl implements AccountService {
 
     @Autowired
     private AcmebCustomerMapper acmebCustomerMapper;
+
+    @Autowired
+    private AdminAccountService adminAccountService;
+
+    @Autowired
+    private TransactionService transactionService;
 
     @Override
     public List<AccountDto> getUserAccounts() throws AccountManagerAppException {
@@ -54,13 +64,28 @@ public class AccountServiceImpl implements AccountService {
         UserDetailsImpl userDetails = securityContextService.getUserDetails();
         AcmebUser user = acmebUserMapper.findByUsername(userDetails.getUsername());
         AcmebAccount account = acmebAccountMapper.findByIdAndAccountNo(user.getUserId(), accountNo);
-        if (account == null) {
+
+        return account == null ? null
+            : new AccountDto(account.getAccountNo(), account.getCurrencyCode(),
+            account.getBalance());
+    }
+
+    @Override
+    public TransactionDto createTransferTransaction(String fromAccountNo,
+        TransferMoneyDto transferMoneyDto) throws AccountManagerAppException {
+
+        AccountDto toAccount = adminAccountService
+            .getAccountByAccountNo(transferMoneyDto.getToAccount());
+
+        if (toAccount == null) {
             throw AccountManagerAppException
-                .accountNumerNotfound(accountNo, user.getUserId());
+                .targetAccountNotfound(transferMoneyDto.getToAccount());
         }
 
-        return new AccountDto(account.getAccountNo(), account.getCurrencyCode(),
-            account.getBalance());
+        // hard coded HKD
+        return transactionService
+            .transferMoney(fromAccountNo, toAccount.getAccountNo(), "HKD",
+                transferMoneyDto.getAmount());
     }
 
 }
